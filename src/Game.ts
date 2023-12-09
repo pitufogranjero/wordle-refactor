@@ -135,6 +135,9 @@ export class Game{
             numberOfCoincidencesPickedWord = (this.#pickedWord.match(pattern)||[]).length;
             numberOfCoincidencesActualWord = (this.#actualWord.match(pattern)||[]).length;
             differenceOfCoincidences = Math.abs(numberOfCoincidencesActualWord - numberOfCoincidencesPickedWord);
+            
+            console.log(`${actualLetter} difference: ${differenceOfCoincidences} picked: ${numberOfCoincidencesPickedWord} actual: ${numberOfCoincidencesActualWord}`)
+
             if (differenceOfCoincidences==1){
                 for (let j=0; j<MAX_WORD_SIZE; j++){
                     if(this.#pickedWord[j]==actualLetter) {
