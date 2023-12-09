@@ -14,6 +14,8 @@ import { MAX_WORD_SIZE, MAX_ATTEMPTS } from "./env.js";
 // import {UIChanger} from "./UIChanger.js";
 import { BackgroundManager } from "./userInterface/BackgroundManager.js";
 import { LetterManager } from "./userInterface/LetterManager.js";
+import { evaluateGuess } from "./evaluateGuess.js";
+import { colorizeLetters } from "./colorizeLetters.js";
 export class Game {
     constructor(pickedWord) {
         _Game_pickedWord.set(this, void 0);
@@ -45,6 +47,7 @@ export class Game {
                 numberOfCoincidencesPickedWord = (__classPrivateFieldGet(this, _Game_pickedWord, "f").match(pattern) || []).length;
                 numberOfCoincidencesActualWord = (__classPrivateFieldGet(this, _Game_actualWord, "f").match(pattern) || []).length;
                 differenceOfCoincidences = Math.abs(numberOfCoincidencesActualWord - numberOfCoincidencesPickedWord);
+                // console.log(`${actualLetter} difference: ${differenceOfCoincidences} picked: ${numberOfCoincidencesPickedWord} actual: ${numberOfCoincidencesActualWord}`)
                 if (differenceOfCoincidences == 1) {
                     for (let j = 0; j < MAX_WORD_SIZE; j++) {
                         if (__classPrivateFieldGet(this, _Game_pickedWord, "f")[j] == actualLetter) {
@@ -73,6 +76,9 @@ export class Game {
             }
         };
         this.updateAfterANewWord = () => {
+            const arraySolution = evaluateGuess(__classPrivateFieldGet(this, _Game_pickedWord, "f"), __classPrivateFieldGet(this, _Game_actualWord, "f"));
+            // console.log(arraySolution);
+            colorizeLetters(__classPrivateFieldGet(this, _Game_turn, "f"), __classPrivateFieldGet(this, _Game_actualWord, "f"), arraySolution);
             this.checkRightLetters();
             this.checkMisplacedLetters();
             this.checkWrongLetters();
@@ -198,9 +204,10 @@ export class Game {
             this.enterPressed();
         if (this.isBackspaceKey(code))
             this.backspacePressed();
-        __classPrivateFieldGet(this, _Game_backgroundManager, "f").changeKeyBackground(code);
+        console.log(code);
+        // this.#backgroundManager.changeKeyBackground(code,"wrongLetter");
         //console.log(this.#actualPosition)
-        // console.log(this.#actualWord)
+        //console.log(this.#actualWord)
     }
 }
 _Game_pickedWord = new WeakMap(), _Game_actualWord = new WeakMap(), _Game_turn = new WeakMap(), _Game_actualPosition = new WeakMap(), _Game_validLetterCodes = new WeakMap(), _Game_letterManager = new WeakMap(), _Game_backgroundManager = new WeakMap();

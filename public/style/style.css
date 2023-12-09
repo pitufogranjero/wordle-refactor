@@ -113,7 +113,16 @@ h1 {
     color: #ffffff;
 }
 
-.keyPressed{
+.rightLetter{
+    background-color: #6AAA64;
+    color: #ffffff;
+}
+
+.misplacedLetter{
+    background-color: #C9B459;
+    color: #ffffff;
+}
+.wrongLetter{
     background-color: #787C7E;
     color: #ffffff;
 }

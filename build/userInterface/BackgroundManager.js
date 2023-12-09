@@ -21,6 +21,9 @@ export class BackgroundManager {
         __classPrivateFieldSet(this, _BackgroundManager_turn, 0, "f");
         __classPrivateFieldSet(this, _BackgroundManager_code, "", "f");
     }
+    static changeCellBackground(turn, i, arg2) {
+        throw new Error("Method not implemented.");
+    }
     get position() {
         return __classPrivateFieldGet(this, _BackgroundManager_position, "f");
     }
@@ -47,17 +50,23 @@ export class BackgroundManager {
     }
     changeCellBackground(turn, position, state) {
         let positionClass = "cell-grey";
+        // console.log(state);
+        if (state == "wrongLetter")
+            positionClass = "cell-grey";
         if (state == "rightLetter")
             positionClass = "cell-green";
         if (state == "misplacedLetter")
             positionClass = "cell-orange";
         Array.from(document.getElementById(`row_${turn}`).children)[position].classList.add(positionClass);
     }
-    changeKeyBackground(code) {
+    changeKeyBackground(code, state) {
+        const keyCode = `Key${code}`;
+        console.log(`${keyCode} - ${state}`);
         const keys = document.getElementsByClassName("key");
         for (let key of keys) {
-            if (key.value == code && code !== "Enter" && code !== "Backspace") {
-                key.classList.add("keyPressed");
+            if (key.value == keyCode && keyCode !== "Enter" && keyCode !== "Backspace") {
+                // key.classList.add("keyPressed");
+                key.classList.add(state);
             }
         }
     }

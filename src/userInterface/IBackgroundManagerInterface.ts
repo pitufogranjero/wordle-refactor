@@ -5,5 +5,5 @@ export interface IBackgroundManagerInterface {
   code: string;
 
   changeCellBackground(turn: number, position: number, state: string): void;
-  changeKeyBackground(code: string): void;
+  changeKeyBackground(code: string, state:string): void;
 }

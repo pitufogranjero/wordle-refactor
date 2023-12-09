@@ -2,6 +2,9 @@ import {MAX_WORD_SIZE, MAX_ATTEMPTS} from "./env.js";
 // import {UIChanger} from "./UIChanger.js";
 import { BackgroundManager } from "./userInterface/BackgroundManager.js";
 import { LetterManager } from "./userInterface/LetterManager.js";
+import { evaluateGuess } from "./evaluateGuess.js";
+import { colorizeLetters } from "./colorizeLetters.js";
+import { LetterState } from "./types.js";
 
 export class Game{
     #pickedWord: string;
@@ -136,7 +139,7 @@ export class Game{
             numberOfCoincidencesActualWord = (this.#actualWord.match(pattern)||[]).length;
             differenceOfCoincidences = Math.abs(numberOfCoincidencesActualWord - numberOfCoincidencesPickedWord);
             
-            console.log(`${actualLetter} difference: ${differenceOfCoincidences} picked: ${numberOfCoincidencesPickedWord} actual: ${numberOfCoincidencesActualWord}`)
+            // console.log(`${actualLetter} difference: ${differenceOfCoincidences} picked: ${numberOfCoincidencesPickedWord} actual: ${numberOfCoincidencesActualWord}`)
 
             if (differenceOfCoincidences==1){
                 for (let j=0; j<MAX_WORD_SIZE; j++){
@@ -167,6 +170,9 @@ export class Game{
     }
 
     updateAfterANewWord = ():void=>{
+        const arraySolution: LetterState[] = evaluateGuess(this.#pickedWord,this.#actualWord);
+        // console.log(arraySolution);
+        colorizeLetters(this.#turn,this.#actualWord,arraySolution);
         this.checkRightLetters();
         this.checkMisplacedLetters();
         this.checkWrongLetters();
@@ -206,9 +212,10 @@ export class Game{
         }
         if (this.isEnterKey(code)) this.enterPressed();
         if (this.isBackspaceKey(code)) this.backspacePressed();
-        this.#backgroundManager.changeKeyBackground(code);
+        console.log(code);
+        // this.#backgroundManager.changeKeyBackground(code,"wrongLetter");
         //console.log(this.#actualPosition)
-        console.log(this.#actualWord)
+        //console.log(this.#actualWord)
     }
 
 

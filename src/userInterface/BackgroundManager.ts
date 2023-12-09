@@ -1,6 +1,9 @@
 import { IBackgroundManagerInterface } from "./IBackgroundManagerInterface";
 
 export class BackgroundManager implements IBackgroundManagerInterface {
+    static changeCellBackground(turn: number, i: number, arg2: string) {
+        throw new Error("Method not implemented.");
+    }
     #state: string;
     #position: number;
     #turn: number;
@@ -39,16 +42,21 @@ export class BackgroundManager implements IBackgroundManagerInterface {
 
     changeCellBackground(turn: number, position: number, state: string): void {
         let positionClass = "cell-grey";
+        // console.log(state);
+        if (state=="wrongLetter") positionClass = "cell-grey";
         if (state=="rightLetter") positionClass = "cell-green";
         if (state=="misplacedLetter") positionClass = "cell-orange";
         Array.from(document.getElementById(`row_${turn}`)!.children)[position].classList.add(positionClass);
     }
 
-    changeKeyBackground(code: string): void {
+    changeKeyBackground(code: string, state: string): void {
+        const keyCode = `Key${code}`;
+        console.log(`${keyCode} - ${state}`);
         const keys: any = document.getElementsByClassName("key");
         for (let key of keys) {
-            if (key.value == code && code !== "Enter" && code !=="Backspace"){
-                key.classList.add("keyPressed");
+            if (key.value == keyCode && keyCode !== "Enter" && keyCode !=="Backspace"){
+                // key.classList.add("keyPressed");
+                key.classList.add(state);
             }
         }
     }
